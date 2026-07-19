@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restructuring Screener</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+    header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 40px; display: flex; align-items: center; gap: 16px; }
+    header h1 { font-size: 1.6rem; color: #58a6ff; }
+    header span { font-size: 0.85rem; background: #388bfd26; color: #58a6ff; border: 1px solid #388bfd; border-radius: 20px; padding: 2px 12px; }
+    .hero { text-align: center; padding: 80px 20px 60px; }
+    .hero h2 { font-size: 2.4rem; color: #e6edf3; margin-bottom: 16px; }
+    .hero p { font-size: 1.1rem; color: #8b949e; max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+    .btn { display: inline-block; padding: 12px 28px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; margin: 6px; cursor: pointer; }
+    .btn-primary { background: #238636; color: #fff; border: 1px solid #2ea043; }
+    .btn-secondary { background: transparent; color: #58a6ff; border: 1px solid #388bfd; }
+    .scores { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; padding: 40px 20px; }
+    .score-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 28px 32px; min-width: 200px; text-align: center; }
+    .score-card .label { font-size: 0.85rem; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .score-card .value { font-size: 2.2rem; font-weight: 700; }
+    .distress { color: #f85149; }
+    .significance { color: #d29922; }
+    .turnaround { color: #3fb950; }
+    section { padding: 40px; max-width: 1000px; margin: 0 auto; }
+    section h3 { font-size: 1.3rem; color: #e6edf3; margin-bottom: 16px; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+    .event-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
+    .event-tag { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 18px; font-size: 0.92rem; color: #c9d1d9; }
+    .event-tag strong { display: block; color: #58a6ff; margin-bottom: 4px; }
+    .api-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .api-table th { background: #161b22; color: #8b949e; text-align: left; padding: 10px 14px; font-size: 0.82rem; text-transform: uppercase; border-bottom: 1px solid #30363d; }
+    .api-table td { padding: 12px 14px; border-bottom: 1px solid #21262d; font-size: 0.92rem; vertical-align: top; }
+    .method { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; font-family: monospace; }
+    .get { background: #388bfd26; color: #58a6ff; }
+    .post { background: #3fb95026; color: #3fb950; }
+    code { background: #161b22; border: 1px solid #30363d; border-radius: 4px; padding: 1px 6px; font-size: 0.88rem; font-family: monospace; color: #d2a8ff; }
+    .stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .tech { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 6px 14px; font-size: 0.88rem; color: #c9d1d9; }
+    footer { text-align: center; padding: 40px 20px; color: #484f58; font-size: 0.85rem; border-top: 1px solid #21262d; margin-top: 40px; }
+    footer a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>&#9733; Restructuring Screener</h1>
+  <span>MVP v1.0</span>
+</header>
+
+<div class="hero">
+  <h2>Corporate Restructuring Intelligence</h2>
+  <p>An event-driven screener for restructuring situations. Every company receives three explainable 0-100 scores &mdash; distress, restructuring significance, and turnaround opportunity &mdash; recomputed automatically whenever new events are ingested.</p>
+  <a class="btn btn-primary" href="https://github.com/grisheet/restructuring-screener">View on GitHub</a>
+  <a class="btn btn-secondary" href="https://github.com/grisheet/restructuring-screener#api-endpoints">API Docs</a>
+</div>
+
+<div class="scores">
+  <div class="score-card">
+    <div class="label">Distress Score</div>
+    <div class="value distress">0 &ndash; 100</div>
+    <div style="font-size:0.82rem;color:#8b949e;margin-top:8px;">Likelihood of financial distress</div>
+  </div>
+  <div class="score-card">
+    <div class="label">Restructuring Significance</div>
+    <div class="value significance">0 &ndash; 100</div>
+    <div style="font-size:0.82rem;color:#8b949e;margin-top:8px;">Scale and importance of restructuring</div>
+  </div>
+  <div class="score-card">
+    <div class="label">Turnaround Opportunity</div>
+    <div class="value turnaround">0 &ndash; 100</div>
+    <div style="font-size:0.82rem;color:#8b949e;margin-top:8px;">Potential for successful recovery</div>
+  </div>
+</div>
+
+<section>
+  <h3>Covered Event Types</h3>
+  <div class="event-types">
+    <div class="event-tag"><strong>Bankruptcy</strong>Chapter 7 / 11 / 15 filings</div>
+    <div class="event-tag"><strong>Spin-Off</strong>Corporate divestitures &amp; separations</div>
+    <div class="event-tag"><strong>Asset Sale</strong>Significant asset disposals</div>
+    <div class="event-tag"><strong>Debt Restructuring / LME</strong>Out-of-court exchanges</div>
+    <div class="event-tag"><strong>Strategic Review</strong>Board-level strategic processes</div>
+    <div class="event-tag"><strong>Covenant Event</strong>Waiver, breach, and cure events</div>
+    <div class="event-tag"><strong>Distressed Financing</strong>High-yield &amp; rescue capital</div>
+    <div class="event-tag"><strong>Going-Concern Warning</strong>Auditor qualifications</div>
+    <div class="event-tag"><strong>Turnaround Change</strong>Management &amp; advisory changes</div>
+    <div class="event-tag"><strong>Activist Campaign</strong>Shareholder activism events</div>
+  </div>
+</section>
+
+<section>
+  <h3>API Endpoints</h3>
+  <table class="api-table">
+    <thead>
+      <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/health</code></td><td>Health check &mdash; returns API status and version</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/companies</code></td><td>List all companies with current scores</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/companies/{id}</code></td><td>Full company detail with score breakdown and explainability</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/companies</code></td><td>Create a new company</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/events</code></td><td>List all ingested events</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/events</code></td><td>Ingest a new restructuring event (triggers score recompute)</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/scores/{company_id}</code></td><td>Latest scores for a company</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Technology Stack</h3>
+  <div class="stack">
+    <span class="tech">Python 3.11</span>
+    <span class="tech">FastAPI</span>
+    <span class="tech">SQLAlchemy 2</span>
+    <span class="tech">Alembic</span>
+    <span class="tech">PostgreSQL 16</span>
+    <span class="tech">Pydantic v2</span>
+    <span class="tech">Uvicorn</span>
+    <span class="tech">Docker Compose</span>
+    <span class="tech">pytest</span>
+  </div>
+</section>
+
+<section>
+  <h3>Quick Start</h3>
+  <p style="margin-bottom:12px;color:#8b949e;">Prerequisites: Docker &amp; Docker Compose installed.</p>
+  <pre style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;overflow-x:auto;font-size:0.88rem;line-height:1.7;"><code style="background:none;border:none;color:#c9d1d9;padding:0;">git clone https://github.com/grisheet/restructuring-screener.git
+cd restructuring-screener
+cp .env.example .env        # edit DATABASE_URL if needed
+docker compose up --build
+# API available at http://localhost:8000
+# Docs at http://localhost:8000/docs</code></pre>
+</section>
+
+<footer>
+  <p>Built with FastAPI &bull; <a href="https://github.com/grisheet/restructuring-screener">github.com/grisheet/restructuring-screener</a></p>
+</footer>
+
+</body>
+</html>
